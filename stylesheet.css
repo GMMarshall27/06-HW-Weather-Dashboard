@@ -1,0 +1,13 @@
+*{
+    box-sizing: border-box;
+}
+
+button {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.jumbotron{
+    background-color: cornflowerblue;
+    color: white;
+}

@@ -20,15 +20,15 @@
             <div class="row">
                 <div class="col-md-3">
                     <h2>Search for a City: </h2>
-                    <input type="text">
-                    <button>Search</button>
+                    <input type="text" id="searchedCity">
+                    <button id="searchButton">Search</button>
                     <ul class="list-group">
                     </ul>
                 </div>
                 <div class="col-md-9">
                     <div class="row ml-3 border border-dark">
                         <div class="col-md-12" id="currentWeather">
-                            <h3 class = "cityName mb-1 mt-1" id="currentCity"></h3>
+                            <h3 class = "cityName mb-1 mt-4" id="currentCity"></h3>
                             <p>Temp:<span></span></p>
                             <p>Wind:<span></span></p>
                             <p>Humidity:<span></span></p>
@@ -80,7 +80,8 @@
                 </div>
             </div>
         </div>
-        
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="/script.js" async defer></script>
     </body>
 </html>

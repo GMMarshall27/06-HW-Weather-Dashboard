@@ -17,15 +17,6 @@ searchButton.on('click',function(){
     currentWeather();
 });
 
-
-function displayWeather(event){
-    event.preventDefault();
-    if(searchedCity.val().trim()!==""){
-        city= searchedCity.val().trim();
-        currentWeather(city);
-    }
-}
-
 function currentWeather(){
     var city = localStorage.getItem("city");
     var queryURL= "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKey;
@@ -55,5 +46,14 @@ function getUV(lon,lat) {
     }).then(function(response){
         console.log(response);
         currentUv.html(response.daily[0].uvi)
-    })
+        fiveDay(response);
+    });
+ function fiveDay(response){
+     for (i=1;i<6;i++){
+         var fDate= moment.unix(response.daily[i].dt);
+         $('#futureDate'+i).html(fDate.format("M/DD/YYYY"));
+         
+         
+    }
+ }
 }

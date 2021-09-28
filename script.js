@@ -34,10 +34,12 @@ function currentWeather(){
         console.log(response);
 
         var weathericon= response.weather[0].icon;
-        var iconURL= "https://openweathermap.org/img/wn/" + weathericon + "2x.png";
+        var iconURL= "http://openweathermap.org/img/wn/" + weathericon + "2x.png";
         var currentDate =new Date(response.dt*1000).toLocaleDateString();
         currentCity.html(response.name +"("+currentDate+")"+ "<img src="+iconURL+">");
         currentTemp.html(response.main.temp+" F");
+        currentWind.html(response.wind.speed+" MPH");
+        currentHumid.html(response.main.humidity+" %");
 
     });
 }

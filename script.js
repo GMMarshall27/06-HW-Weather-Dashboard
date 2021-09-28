@@ -53,7 +53,8 @@ function getUV(lon,lat) {
      for (i=1;i<6;i++){
          var fDate= moment.unix(response.daily[i].dt);
          $('#futureDate'+i).html(fDate.format("M/DD/YYYY"));
-         $('#futureTemp'+i).html(response.daily[i].temp.day);
+         $('#futureTemp'+i).html(response.daily[i].temp.day +" F");
+         $('#futureWind'+i).html(response.daily[i].wind_speed + " MPH")
          
     }
  }

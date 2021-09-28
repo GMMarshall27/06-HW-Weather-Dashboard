@@ -2,6 +2,8 @@ var APIKey = "1c2d55e5ab4bd47916f6287ef9d3e643";
 var currentTemp = $('#temp');
 var currentWind = $('#wind');
 var currentHumid = $('#humid');
+var lon;
+var lat;
 var currentUv = $('#uv');
 var currentCity = $('#currentCity');
 var searchedCity = $("#searchedCity");
@@ -40,7 +42,18 @@ function currentWeather(){
         currentTemp.html(response.main.temp+" F");
         currentWind.html(response.wind.speed+" MPH");
         currentHumid.html(response.main.humidity+" %");
+        getUV(response.coord.lat,response.coord.lon);
 
     });
 }
 
+function getUV(lon,lat) {
+    var uvURL="https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" +lon+ "&units=imperial&appid=" + APIKey;
+    $.ajax({
+        url: uvURL,
+        method: "GET",
+    }).then(function(response){
+        console.log(response);
+        currentUv.html(response.daily[0].uvi)
+    })
+}

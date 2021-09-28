@@ -27,13 +27,14 @@ function currentWeather(){
         console.log(response);
 
         var weathericon= response.weather[0].icon;
-        var iconURL= "http://openweathermap.org/img/wn/" + weathericon + "2x.png";
+        var iconURL= "http://openweathermap.org/img/wn/" + weathericon + "@2x.png";
         var currentDate =new Date(response.dt*1000).toLocaleDateString();
         currentCity.html(response.name +"("+currentDate+")"+ "<img src="+iconURL+">");
         currentTemp.html(response.main.temp+" F");
         currentWind.html(response.wind.speed+" MPH");
         currentHumid.html(response.main.humidity+" %");
-        getUV(response.coord.lat,response.coord.lon);
+        console.log(response.coord.lat);
+        getUV(response.coord.lon,response.coord.lat);
 
     });
 }
@@ -52,7 +53,7 @@ function getUV(lon,lat) {
      for (i=1;i<6;i++){
          var fDate= moment.unix(response.daily[i].dt);
          $('#futureDate'+i).html(fDate.format("M/DD/YYYY"));
-         
+         $('#futureTemp'+i).html(response.daily[i].temp.day);
          
     }
  }

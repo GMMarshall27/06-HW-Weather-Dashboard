@@ -28,7 +28,8 @@ function currentWeather(){
     }).then(function(response){
         console.log(response);
         displayWeather(response);
-    });
+        //uviColor();
+    }); 
     } function displayWeather(response){
         var weathericon= response.weather[0].icon;
         var iconURL= "http://openweathermap.org/img/wn/" + weathericon + "@2x.png";
@@ -55,7 +56,7 @@ function currentWeather(){
                     addToList(city);
                 }
             }
-        }
+        } //uviColor();
     }
 
 
@@ -66,7 +67,18 @@ function getUV(lon,lat) {
         method: "GET",
     }).then(function(response){
         console.log(response);
-        currentUv.html(response.daily[0].uvi)
+        var todayUV=response.current.uvi;
+        currentUv.html(todayUV);
+        function uviColor(){
+            if(todayUV<=3){
+                $('#uv').css('background-color', 'green');
+            }   else if (todayUV>3&&todayUV<=6){
+                $('#uv').css('background-color', 'orange');
+            } else {
+                $('#uv').css('background-color', 'red');
+            }
+            console.log(todayUV)
+        } uviColor();
         fiveDay(response);
     });
  function fiveDay(response){

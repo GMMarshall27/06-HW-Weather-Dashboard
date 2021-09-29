@@ -7,6 +7,7 @@ var savedCity=[];
 var lon;
 var lat;
 var city;
+var storage = JSON.parse(localStorage.getItem(savedCity));
 var currentUv = $('#uv');
 var currentCity = $('#currentCity');
 var searchedCity = $("#searchedCity");
@@ -18,12 +19,12 @@ searchButton.on('click',function(){
     if(city !== null){
         localStorage.setItem("city", city)
     }
-    currentWeather();
+    currentWeather(city);
 });
 //function to pull current weather data from API and stores it
-function currentWeather(){
-    var city = localStorage.getItem("city");
-    var queryURL= "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKey;
+function currentWeather(x){
+    // x = localStorage.getItem("city");
+    var queryURL= "http://api.openweathermap.org/data/2.5/weather?q=" + x + "&units=imperial&appid=" + APIKey;
     $.ajax({
         url: queryURL,
         method:"GET",
@@ -52,12 +53,16 @@ function currentWeather(){
                 savedCity=[];
                 savedCity.push(city);
                 localStorage.setItem("cityname",JSON.stringify(savedCity));
+                addToList(city);
             }
             else {
                 if(find(city)>0){
-                    savedCity.push(city);
+                    var sandwich = savedCity.indexOf(city)
+                    if(sandwich == -1){
+                        savedCity.push(city);
                     localStorage.setItem("cityname",JSON.stringify(savedCity));
                     addToList(city);
+                    }
                 }
             }
         } 
@@ -103,21 +108,32 @@ function getUV(lon,lat) {
 }
 //function to add the searched city to a list and display it under search bar.
 function addToList(city){
-    var listEl= $("<li>"+city.toUpperCase()+"</li>");
-    $(listEl).attr("class","list-group-item");
-    $(listEl).attr("data-value",city.toUpperCase());
-    $(".list-group").append(listEl);
+    var searchEl= $("<li>"+city.toUpperCase()+"</li>");
+    $(searchEl).attr("class","list-group-item");
+    $(searchEl).attr("data-value",city.toUpperCase());
+    $(".list-group").append(searchEl);
+    
 }
-//function to load the saved data from the searched city. 
-function loadCity(){
-    $('ul').empty();
-    var savedCity = JSON.parse(localStorage.getItem("cityname"));
-    if(savedCity !==null){
-        savedCity = JSON.parse(localStorage.getItem('cityname'));
-        for(i=0;i<savedCity.length;i++){
-            addToList(savedCity[i]);
-        }
-        city=savedCity[i-1];
+//function to display past searches
+function pastSearch(event){
+    var liEl=event.target;
+    var y=liEl.value;
+    console.log("pastSearch"+y);
+    if(event.target.matches('li')){
+        city=liEl.textContent;
         currentWeather(city);
     }
 }
+function init(){
+    if (storage != null){
+        currentWeather(storage[0])
+
+    } else{
+        city = 'Marietta'
+        currentWeather(city)
+    }
+}
+init()
+
+$(document).on('click',pastSearch);
+

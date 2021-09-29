@@ -51,11 +51,15 @@ function getUV(lon,lat) {
     });
  function fiveDay(response){
      for (i=1;i<6;i++){
+         
          var fDate= moment.unix(response.daily[i].dt);
          $('#futureDate'+i).html(fDate.format("M/DD/YYYY"));
          $('#futureTemp'+i).html(response.daily[i].temp.day +" F");
-         $('#futureWind'+i).html(response.daily[i].wind_speed + " MPH")
-         
+         $('#futureWind'+i).html(response.daily[i].wind_speed + " MPH");
+         $('#futureHumid'+i).html(response.daily[i].humidity+" %");
+         var weathericon= response.daily[i].weather[0].icon;
+         var iconURL= "http://openweathermap.org/img/wn/" + weathericon + "@2x.png";
+         $('#futureImage'+i).html("<img src="+iconURL+">");
     }
  }
 }
